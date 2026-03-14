@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AgriSmart – Risk Alerts</title>
+<link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg-secondary);color:var(--text-primary);display:flex;min-height:100vh}
+.sidebar{width:200px;background:#fff;border-right:1px solid #e5e7e5;padding:16px 0;flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;bottom:0}
+.brand{padding:0 16px 20px;display:flex;align-items:center;gap:10px}
+.brand-icon{width:36px;height:36px;background:#22c55e;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.brand-icon svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+.brand-name{font-size:14px;font-weight:800}
+.brand-sub{font-size:9px;color:#22c55e;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer;border-radius:8px;margin:1px 8px;transition:all .2s}
+.nav-item:hover{background:#f0fdf4;color:#16a34a}
+.nav-item.active{background:#22c55e;color:#fff;font-weight:600}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.sidebar-bottom{margin-top:auto;padding:12px 16px}
+.nav-settings{display:flex;align-items:center;gap:10px;padding:10px 8px;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer}
+.sidebar-footer{padding:12px 16px;border-top:1px solid #e5e7e5;display:flex;align-items:center;gap:10px}
+.avatar-sm{width:32px;height:32px;border-radius:50%;overflow:hidden;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#16a34a}
+.user-name{font-size:12px;font-weight:700}
+.user-role{font-size:10px;color:#22c55e}
+.main{margin-left:200px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid #e5e7e5;padding:12px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.topbar h2{font-size:17px;font-weight:700;white-space:nowrap}
+.location-badge{display:flex;align-items:center;gap:4px;font-size:12px;color:#6b7280;background:#f9fafb;border:1px solid #e5e7e5;border-radius:20px;padding:4px 10px}
+.location-badge svg{width:12px;height:12px;stroke:#22c55e;fill:none;stroke-width:2}
+.search-wrap{flex:1;max-width:320px;position:relative;margin:0 12px}
+.search-wrap input{width:100%;height:34px;border:1.5px solid #e5e7e5;border-radius:20px;padding:0 16px 0 32px;font-size:13px;outline:none;background:#f9fafb;font-family:'Inter',sans-serif}
+.search-wrap input:focus{border-color:#22c55e}
+.s-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%)}
+.s-icon svg{width:13px;height:13px;stroke:#9ca3af;fill:none;stroke-width:2}
+.help-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid #e5e7e5;background:#fff;cursor:pointer;font-weight:700;font-size:13px;color:#6b7280}
+.btn-report{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;font-family:'Inter',sans-serif}
+.btn-report:hover{background:#16a34a}
+.content{padding:24px;flex:1}
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:#fff;border-radius:12px;border:1px solid #e5e7e5;padding:16px 18px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.stat-label{font-size:12px;font-weight:600;color:#6b7280}
+.stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.stat-icon.green{background:#dcfce7}
+.stat-icon.green svg{stroke:#16a34a}
+.stat-icon.red{background:#fee2e2}
+.stat-icon.red svg{stroke:#dc2626}
+.stat-icon.blue{background:#dbeafe}
+.stat-icon.blue svg{stroke:#3b82f6}
+.stat-icon.gray{background:#f3f4f6}
+.stat-icon.gray svg{stroke:#6b7280}
+.stat-icon svg{width:18px;height:18px;stroke-width:2;fill:none}
+.stat-val{font-size:28px;font-weight:900;margin-bottom:2px}
+.stat-sub{font-size:11px;color:#9ca3af}
+.stat-sub.red{color:#ef4444;font-weight:600}
+.stat-sub.green{color:#22c55e;font-weight:600}
+/* ALERT TABLE */
+.alert-section{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:0;margin-bottom:20px;overflow:hidden}
+.alert-tabs-row{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid #e5e7e5;gap:16px}
+.alert-tab{font-size:13px;font-weight:600;cursor:pointer;padding:6px 12px;border-radius:8px;color:#6b7280;transition:all .2s}
+.alert-tab.active{background:#f0fdf4;color:#16a34a}
+.alert-tab:hover{color:#16a34a}
+.filter-controls{margin-left:auto;display:flex;gap:10px}
+.filter-select{border:1.5px solid #e5e7e5;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;outline:none;background:#fff}
+.alert-header-row{display:grid;grid-template-columns:180px 1fr 160px 140px 140px;gap:12px;padding:10px 18px;border-bottom:1px solid #e5e7e5}
+.ah-cell{font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em}
+.alert-row{display:grid;grid-template-columns:180px 1fr 160px 140px 140px;gap:12px;padding:14px 18px;border-bottom:1px solid #f3f4f6;align-items:center;cursor:pointer;transition:background .2s}
+.alert-row:hover{background:#f9fafb}
+.alert-row:last-child{border-bottom:none}
+.severity-badge{display:flex;align-items:center;gap:6px}
+.sev-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sev-dot.high{background:#ef4444}
+.sev-dot.medium{background:#f97316}
+.sev-dot.low{background:#22c55e}
+.sev-label{font-size:12px;font-weight:700}
+.sev-label.high{color:#ef4444}
+.sev-label.medium{color:#f97316}
+.sev-label.low{color:#22c55e}
+.sev-type{font-size:10px;color:#9ca3af}
+.alert-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.alert-desc{font-size:12px;color:#9ca3af;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.location-cell{font-size:12px;font-weight:500;color:#374151}
+.time-cell{font-size:12px;color:#9ca3af}
+.action-btn{border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.action-btn.review{background:#ef4444;color:#fff}
+.action-btn.review:hover{background:#dc2626}
+.action-btn.pump{background:#22c55e;color:#fff}
+.action-btn.pump:hover{background:#16a34a}
+.action-btn.plan{background:#fff;color:#1a2e1a;border:1.5px solid #e5e7e5}
+.action-btn.plan:hover{border-color:#22c55e;color:#22c55e}
+.action-btn.ack{background:#fff;color:#1a2e1a;border:1.5px solid #e5e7e5}
+.action-btn.ack:hover{border-color:#22c55e;color:#22c55e}
+.pagination-row{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e5e7e5}
+.pg-text{font-size:12px;color:#9ca3af}
+.pg-btns{display:flex;gap:6px}
+.pg-btn{width:28px;height:28px;border:1.5px solid #e5e7e5;border-radius:6px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pg-btn:hover{border-color:#22c55e;color:#22c55e}
+/* BOTTOM GRID */
+.bottom-grid{display:grid;grid-template-columns:1fr 300px;gap:20px}
+.map-card{background:#fff;border-radius:14px;border:1px solid #e5e7e5;overflow:hidden}
+.map-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #e5e7e5}
+.map-title{font-size:14px;font-weight:700}
+.map-toggle{display:flex;gap:4px}
+.map-toggle button{border:1.5px solid #e5e7e5;background:#fff;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.map-toggle button.active{background:#22c55e;color:#fff;border-color:#22c55e}
+.map-body{position:relative;height:220px;overflow:hidden}
+.map-img{width:100%;height:100%;object-fit:cover;display:block}
+.map-overlay{position:absolute;inset:0;background:rgba(220,252,231,.15)}
+.map-hotspot{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid #fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .2s}
+.map-hotspot:hover{transform:scale(1.3)}
+.map-hotspot.red{background:#ef4444}
+.map-hotspot.orange{background:#f97316}
+.map-hotspot.green{background:#22c55e}
+.map-legend{display:flex;gap:16px;padding:12px 18px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px}
+.leg-dot{width:10px;height:10px;border-radius:50%}
+.actions-card{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:18px}
+.ac-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.ac-sub{font-size:12px;color:#9ca3af;margin-bottom:16px}
+.action-item{border-radius:10px;padding:12px;margin-bottom:10px;cursor:pointer;transition:box-shadow .2s}
+.action-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.ai-header{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.ai-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ai-icon.orange{background:#fff7ed}
+.ai-icon.orange svg{stroke:#f97316}
+.ai-icon.blue{background:#eff6ff}
+.ai-icon.blue svg{stroke:#3b82f6}
+.ai-icon.red{background:#fef2f2}
+.ai-icon.red svg{stroke:#ef4444}
+.ai-icon svg{width:16px;height:16px;fill:none;stroke-width:2}
+.ai-name{font-size:13px;font-weight:700}
+.ai-desc{font-size:12px;color:#6b7280;line-height:1.4;margin-bottom:6px}
+.ai-link{font-size:12px;font-weight:600;color:#22c55e;cursor:pointer}
+.ai-link:hover{text-decoration:underline}
+.btn-mitigation{width:100%;background:#f0fdf4;color:#16a34a;border:1.5px solid #bbf7d0;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:16px;font-family:'Inter',sans-serif}
+.btn-mitigation:hover{background:#dcfce7}
+footer{background:#fff;border-top:1px solid #e5e7e5;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9ca3af}
+footer a{color:#9ca3af;cursor:pointer}
+footer a:hover{color:#22c55e}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg></div>
+    <div><div class="brand-name">AgriSmart</div><div class="brand-sub">Farm Management</div></div>
+  </div>
+  <div class="nav-item" onclick="goto('../Landing/landing.html')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard
+  </div>
+  <div class="nav-item" onclick="goto('../Disgnosis/index.html')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Diagnosis
+  </div>
+  <div class="nav-item active">
+    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alerts
+  </div>
+  <div class="nav-item" onclick="goto('../Sensor/sensor.html')">
+    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg> Crop Health
+  </div>
+  <div class="nav-item" onclick="goto('../Consult/consult.html')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Consult
+  </div>
+  <div class="nav-item" onclick="goto('../Community/community.html')">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Community
+  </div>
+  <div class="nav-item" onclick="goto('../Library/library.html')">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Library
+  </div>
+  <div class="sidebar-bottom">
+    <div class="nav-settings"><svg viewBox="0 0 24 24" width="16" height="16" style="stroke:currentColor;fill:none;stroke-width:2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2"/></svg> Settings</div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="avatar-sm">JF</div>
+    <div><div class="user-name">John Farmer</div><div class="user-role">Premium Plan</div></div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <h2>Risk Alerts</h2>
+    <div class="location-badge"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Section 4A, Corn Fields</div>
+    <div class="search-wrap">
+      <div class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <input type="text" placeholder="Search alerts..."/>
+    </div>
+    <button class="help-btn">?</button>
+    <button class="btn-report" onclick="alert('Generating report...')">Generate Report</button>
+  </div>
+
+  <div class="content">
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-top"><div class="stat-label">Total Active Risks</div><div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div></div>
+        <div class="stat-val">12</div>
+        <div class="stat-sub green">↑ 2 since yesterday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><div class="stat-label">High Severity</div><div class="stat-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div></div>
+        <div class="stat-val" style="color:#ef4444">3</div>
+        <div class="stat-sub red">Immediate action required</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><div class="stat-label">Weather Alerts</div><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg></div></div>
+        <div class="stat-val">5</div>
+        <div class="stat-sub">Storm incoming: 4h</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><div class="stat-label">Monitoring Stations</div><div class="stat-icon gray"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42"/></svg></div></div>
+        <div class="stat-val">24/24</div>
+        <div class="stat-sub green">All sensors online</div>
+      </div>
+    </div>
+
+    <!-- ALERT TABLE -->
+    <div class="alert-section">
+      <div class="alert-tabs-row">
+        <div class="alert-tab active" onclick="switchAlertTab(this)">Active Alerts</div>
+        <div class="alert-tab" onclick="switchAlertTab(this)">Resolved</div>
+        <div class="alert-tab" onclick="switchAlertTab(this)">Archived</div>
+        <div class="filter-controls">
+          <select class="filter-select"><option>Filter by Type</option><option>Pest Outbreak</option><option>Weather</option><option>Irrigation</option><option>Nutrient</option></select>
+          <select class="filter-select"><option>Sort: Newest First</option><option>Sort: Severity</option><option>Sort: Location</option></select>
+        </div>
+      </div>
+      <div class="alert-header-row">
+        <div class="ah-cell">Status & Type</div>
+        <div class="ah-cell">Alert Description</div>
+        <div class="ah-cell">Location</div>
+        <div class="ah-cell">Time Detected</div>
+        <div class="ah-cell">Actions</div>
+      </div>
+      <div class="alert-row">
+        <div class="severity-badge"><div class="sev-dot high"></div><div><div class="sev-label high">High</div><div class="sev-type">Pest Outbreak</div></div></div>
+        <div><div class="alert-title">Armyworm Infestation Detected</div><div class="alert-desc">AI vision sensors detected armyworm larvae in...</div></div>
+        <div class="location-cell">North Field (4B)</div>
+        <div class="time-cell">14 minutes ago</div>
+        <button class="action-btn review" onclick="action('Review Mitigation','Armyworm')">Review Mitigation</button>
+      </div>
+      <div class="alert-row">
+        <div class="severity-badge"><div class="sev-dot high"></div><div><div class="sev-label high">High</div><div class="sev-type">Irrigation</div></div></div>
+        <div><div class="alert-title">Critical Soil Moisture Level</div><div class="alert-desc">Moisture dropped below 15% threshold in the Soy...</div></div>
+        <div class="location-cell">East Soy Area</div>
+        <div class="time-cell">42 minutes ago</div>
+        <button class="action-btn pump" onclick="action('Start Pump','Soil Moisture')">Start Pump</button>
+      </div>
+      <div class="alert-row">
+        <div class="severity-badge"><div class="sev-dot medium"></div><div><div class="sev-label medium">Medium</div><div class="sev-type">Weather</div></div></div>
+        <div><div class="alert-title">Impending Frost Warning</div><div class="alert-desc">Temperatures forecasted to dip to -2°C between ...</div></div>
+        <div class="location-cell">Whole Farm</div>
+        <div class="time-cell">2 hours ago</div>
+        <button class="action-btn plan" onclick="action('View Plan','Frost Warning')">View Plan</button>
+      </div>
+      <div class="alert-row">
+        <div class="severity-badge"><div class="sev-dot low"></div><div><div class="sev-label low">Low</div><div class="sev-type">Nutrient</div></div></div>
+        <div><div class="alert-title">Nitrogen Deficiency Detected</div><div class="alert-desc">Satellite analysis shows early yellowing patterns...</div></div>
+        <div class="location-cell">Central Corn</div>
+        <div class="time-cell">5 hours ago</div>
+        <button class="action-btn ack" onclick="action('Acknowledged','Nitrogen')">Acknowledge</button>
+      </div>
+      <div class="pagination-row">
+        <div class="pg-text">Showing 4 of 12 active alerts</div>
+        <div class="pg-btns">
+          <button class="pg-btn">‹</button>
+          <button class="pg-btn">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM GRID -->
+    <div class="bottom-grid">
+      <div class="map-card">
+        <div class="map-header">
+          <div class="map-title">Alert Heatmap</div>
+          <div class="map-toggle">
+            <button onclick="toggleMap(this,'Satellite')">Satellite</button>
+            <button class="active" onclick="toggleMap(this,'Terrain')">Terrain</button>
+          </div>
+        </div>
+        <div class="map-body">
+          <img class="map-img" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="Farm Map"/>
+          <div class="map-overlay"></div>
+          <div class="map-hotspot red" style="top:40%;left:35%" title="High Severity - Armyworm" onclick="alert('High Severity Zone: Armyworm Infestation')"></div>
+          <div class="map-hotspot red" style="top:55%;left:60%" title="High Severity - Moisture" onclick="alert('High Severity Zone: Critical Moisture')"></div>
+          <div class="map-hotspot orange" style="top:65%;left:45%" title="Medium Severity - Frost" onclick="alert('Medium Severity: Frost Warning')"></div>
+          <div class="map-hotspot green" style="top:30%;left:70%" title="Monitoring Active" onclick="alert('Monitoring Active')"></div>
+        </div>
+        <div class="map-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#ef4444"></div> High Severity Zone</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#f97316"></div> Medium Severity Zone</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#22c55e"></div> Monitoring Active</div>
+        </div>
+      </div>
+
+      <div class="actions-card">
+        <div class="ac-title">Recommended Actions</div>
+        <div class="ac-sub">Based on active risk levels and current weather conditions.</div>
+        <div class="action-item" style="background:#fff7ed">
+          <div class="ai-header"><div class="ai-icon orange"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="ai-name">Schedule Spraying</div></div>
+          <div class="ai-desc">Deploy drone sprayers to Sector 4B to contain armyworm spread before 6 PM.</div>
+          <div class="ai-link" onclick="alert('Deploying fleet...')">Deploy Fleet →</div>
+        </div>
+        <div class="action-item" style="background:#eff6ff">
+          <div class="ai-header"><div class="ai-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div><div class="ai-name">Smart Irrigation</div></div>
+          <div class="ai-desc">Automated schedule ready for Soy Field. Optimal runtime: 45 minutes.</div>
+          <div class="ai-link" onclick="alert('Approving schedule...')">Approve Schedule →</div>
+        </div>
+        <div class="action-item" style="background:#fef2f2">
+          <div class="ai-header"><div class="ai-icon red"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14h18V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="ai-name">Stock Check</div></div>
+          <div class="ai-desc">Low on insecticide 'A-12'. Current stock: 4.5L. Required: 15L.</div>
+          <div class="ai-link" onclick="alert('Ordering now...')">Order Now →</div>
+        </div>
+        <button class="btn-mitigation" onclick="alert('Viewing detailed mitigation plans...')">View Detailed Mitigation Plans</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <span>© 2024 AgriSmart Technologies Inc. All rights reserved.</span>
+    <div style="display:flex;gap:20px"><a>System Status</a><a>Documentation</a><a>Support</a></div>
+  </footer>
+</div>
+
+<script>
+function goto(p){window.location.href = p;}
+function switchAlertTab(el){
+  document.querySelectorAll('.alert-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleMap(btn,mode){
+  document.querySelectorAll('.map-toggle button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  alert('Switching to '+mode+' view...');
+}
+function action(label,item){alert(label+' for: '+item)}
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>

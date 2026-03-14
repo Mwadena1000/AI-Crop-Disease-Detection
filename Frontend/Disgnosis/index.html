@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AgriSmart – AI Crop Diagnosis</title>
+<link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg-secondary);color:var(--text-primary);display:flex;height:100vh;overflow:hidden}
+/* TOP NAV */
+.topnav{position:fixed;top:0;left:0;right:0;height:56px;background:#fff;border-bottom:1px solid #e5e7e5;display:flex;align-items:center;padding:0 20px;gap:24px;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}
+.logo-icon{width:30px;height:30px;background:#22c55e;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+.search-wrap{flex:1;max-width:360px;position:relative;margin:0 20px}
+.search-wrap input{width:100%;height:34px;border:1.5px solid #e5e7e5;border-radius:20px;padding:0 16px 0 34px;font-size:13px;outline:none;font-family:'Inter',sans-serif;background:#f9fafb}
+.search-wrap input:focus{border-color:#22c55e}
+.s-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#9ca3af}
+.s-icon svg{width:14px;height:14px;stroke:#9ca3af;fill:none;stroke-width:2}
+.nav-links{display:flex;gap:24px;font-size:14px;font-weight:500;color:#6b7280}
+.nav-links span{cursor:pointer;padding:4px 0}
+.nav-links span:hover,.nav-links span.active{color:#22c55e;font-weight:600}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;color:#6b7280}
+.icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.avatar{width:32px;height:32px;border-radius:50%;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+/* SIDEBAR */
+.sidebar{width:200px;background:#fff;border-right:1px solid #e5e7e5;padding:72px 0 16px;flex-shrink:0;display:flex;flex-direction:column}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer;border-radius:8px;margin:1px 8px;transition:all .2s}
+.nav-item:hover{background:#f0fdf4;color:#16a34a}
+.nav-item.active{background:#22c55e;color:#fff;font-weight:600}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.sidebar-footer{margin-top:auto;padding:12px 16px}
+.pro-banner{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px}
+.pro-label{font-size:10px;font-weight:800;color:#22c55e;letter-spacing:.08em;margin-bottom:4px}
+.pro-text{font-size:12px;color:#6b7280;margin-bottom:10px}
+.btn-upgrade{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;width:100%;font-family:'Inter',sans-serif}
+.btn-upgrade:hover{background:#16a34a}
+/* CONTENT */
+.content-wrap{margin-top:56px;flex:1;display:flex;overflow:hidden}
+.main-area{flex:1;overflow-y:auto;padding:28px}
+.right-panel{width:280px;background:#fff;border-left:1px solid #e5e7e5;padding:24px;overflow-y:auto}
+h1{font-size:26px;font-weight:900;margin-bottom:4px}
+.subtitle{font-size:14px;color:#6b7280;margin-bottom:24px}
+/* UPLOAD ZONE */
+.upload-zone{border:2px dashed #bbf7d0;border-radius:16px;background:#f0fdf4;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:20px}
+.upload-zone:hover,.upload-zone.dragover{border-color:#22c55e;background:#dcfce7}
+.upload-icon{width:56px;height:56px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.upload-icon svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2}
+.upload-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.upload-hint{font-size:13px;color:#6b7280;margin-bottom:20px}
+.upload-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-select{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif}
+.btn-select:hover{background:#16a34a}
+.btn-camera{background:#fff;color:#1a2e1a;border:1.5px solid #e5e7e5;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif}
+.btn-camera:hover{border-color:#22c55e;color:#22c55e}
+.btn-select svg,.btn-camera svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+/* PREVIEW */
+.upload-preview{display:none;text-align:center;padding:20px}
+.upload-preview img{max-height:200px;border-radius:12px;margin-bottom:12px}
+.btn-analyze{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:12px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-analyze:hover{background:#16a34a}
+/* RECENT UPLOADS */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.section-title{font-size:16px;font-weight:700}
+.view-all{color:#22c55e;font-size:13px;font-weight:600;cursor:pointer}
+.view-all:hover{text-decoration:underline}
+.recent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.recent-item{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.recent-item:hover,.recent-item.active{border-color:#22c55e}
+.recent-item img{width:100%;height:100px;object-fit:cover;display:block}
+.recent-item-info{padding:8px;background:#fff}
+.ri-title{font-size:12px;font-weight:600}
+.ri-date{font-size:11px;color:#9ca3af}
+/* RIGHT PANEL */
+.rp-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.rp-date{font-size:12px;color:#9ca3af;margin-bottom:16px}
+.result-img{border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
+.result-img img{width:100%;height:160px;object-fit:cover;display:block}
+.match-badge{position:absolute;top:10px;left:10px;background:#22c55e;color:#fff;font-size:11px;font-weight:700;border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:4px}
+.match-badge::before{content:'●';font-size:8px}
+.identified-label{font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.condition-name{font-size:20px;font-weight:800;margin-bottom:8px}
+.condition-desc{font-size:13px;color:#6b7280;line-height:1.5;margin-bottom:16px}
+.severity-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.sev-card{background:#fff7ed;border-radius:10px;padding:12px}
+.sev-label{font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;margin-bottom:4px}
+.sev-value{font-size:14px;font-weight:700;color:#f97316}
+.spread-card{background:#fef2f2;border-radius:10px;padding:12px}
+.spread-label{font-size:10px;font-weight:600;color:#9ca3af;text-transform:uppercase;margin-bottom:4px}
+.spread-value{font-size:14px;font-weight:700;color:#ef4444}
+.treat-title{font-size:14px;font-weight:700;margin-bottom:10px}
+.treat-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#374151;margin-bottom:8px;line-height:1.4}
+.treat-item::before{content:'✓';color:#22c55e;font-weight:700;flex-shrink:0;margin-top:1px}
+.btn-report{width:100%;background:#22c55e;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-family:'Inter',sans-serif}
+.btn-report:hover{background:#16a34a}
+.btn-report svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+.btn-expert{width:100%;background:#fff;color:#1a2e1a;border:1.5px solid #e5e7e5;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;font-family:'Inter',sans-serif}
+.btn-expert:hover{border-color:#22c55e;color:#22c55e}
+.btn-expert svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+/* ANALYZING */
+.analyzing{display:none;text-align:center;padding:20px}
+.spinner{width:48px;height:48px;border:4px solid #e5e7e5;border-top-color:#22c55e;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg></div>
+    AgriSmart
+  </div>
+  <div class="search-wrap">
+    <div class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    <input type="text" placeholder="Search crops, pests, diseases!"/>
+  </div>
+  <div class="nav-links">
+    <span onclick="goto('../Dashboard/dashboard.html')">Dashboard</span>
+    <span class="active">Diagnosis</span>
+    <span onclick="goto('../Risk/risk.html')">Marketplace</span>
+    <span onclick="goto('../Community/community.html')">Community</span>
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    <button class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41"/><path d="M4.93 4.93l1.41 1.41"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M20 12h2"/><path d="M2 12h2"/><path d="M17.66 17.66l-1.41-1.41"/><path d="M6.34 6.34l-1.41-1.41"/></svg></button>
+    <div class="avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"/></div>
+  </div>
+</nav>
+
+<div class="content-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="nav-item" onclick="goto('../Dashboard/dashboard.html')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Overview
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Disease Diagnosis
+    </div>
+    <div class="nav-item" onclick="showHistory()">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> Scan History
+    </div>
+    <div class="nav-item" onclick="goto('../Consult/consult.html')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Expert Consult
+    </div>
+    <div class="nav-item" onclick="goto('../Library/library.html')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Field Library
+    </div>
+    <div class="sidebar-footer">
+      <div class="pro-banner">
+        <div class="pro-label">PRO PLAN</div>
+        <div class="pro-text">Get unlimited scans and 24/7 expert support.</div>
+        <button class="btn-upgrade">Upgrade Now</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <h1>AI Crop Diagnosis</h1>
+    <p class="subtitle">Identify pests, diseases, and nutrient deficiencies in seconds using our advanced AI.</p>
+
+    <!-- UPLOAD ZONE -->
+    <div class="upload-zone" id="uploadZone" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)" onclick="triggerFileInput()">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="fileSelected(event)"/>
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></div>
+      <div class="upload-title">Drop your photo here</div>
+      <div class="upload-hint">or click to browse from your device (JPG, PNG up to 10MB)</div>
+      <div class="upload-btns">
+        <button class="btn-select" onclick="event.stopPropagation();triggerFileInput()">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg> Select Image
+        </button>
+        <button class="btn-camera" onclick="event.stopPropagation();alert('Camera access: Please allow camera permissions.')">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Use Camera
+        </button>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="upload-preview" id="previewArea">
+      <img id="previewImg" src="" alt="Preview"/>
+      <div class="analyzing" id="analyzingState">
+        <div class="spinner"></div>
+        <div style="font-size:14px;font-weight:600;color:#16a34a">Analyzing your image...</div>
+        <div style="font-size:12px;color:#9ca3af;margin-top:4px">This usually takes 2–5 seconds</div>
+      </div>
+      <div id="analyzeBtn">
+        <button class="btn-analyze" onclick="analyzeImage()">🔍 Analyze with AI</button>
+      </div>
+    </div>
+
+    <!-- RECENT UPLOADS -->
+    <div class="section-header">
+      <div class="section-title">Recent Uploads</div>
+      <div class="view-all" onclick="showHistory()">View All</div>
+    </div>
+    <div class="recent-grid">
+      <div class="recent-item active" onclick="selectRecent(this,'Tomato – Late Blight')">
+        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300&q=80" alt="Tomato"/>
+        <div class="recent-item-info"><div class="ri-title">Tomato - Late Blight</div><div class="ri-date">2 hours ago</div></div>
+      </div>
+      <div class="recent-item" onclick="selectRecent(this,'Corn – Healthy')">
+        <img src="https://images.unsplash.com/photo-1601379328950-93e9014bbfc8?w=300&q=80" alt="Corn"/>
+        <div class="recent-item-info"><div class="ri-title">Corn - Healthy</div><div class="ri-date">Yesterday</div></div>
+      </div>
+      <div class="recent-item" onclick="selectRecent(this,'Rice – Brown Spot')">
+        <img src="https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=300&q=80" alt="Rice"/>
+        <div class="recent-item-info"><div class="ri-title">Rice - Brown Spot</div><div class="ri-date">3 days ago</div></div>
+      </div>
+      <div class="recent-item" onclick="selectRecent(this,'Potato – Early Blight')">
+        <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&q=80" alt="Potato"/>
+        <div class="recent-item-info"><div class="ri-title">Potato - Early Blight</div><div class="ri-date">Oct 24, 2023</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="rp-title">Analysis Result</div>
+    <div class="rp-date">Latest analysis: Oct 27, 10:45 AM</div>
+    <div class="result-img">
+      <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&q=80" alt="Result"/>
+      <div class="match-badge">98% Match</div>
+    </div>
+    <div class="identified-label">Identified Condition</div>
+    <div class="condition-name">Tomato Late Blight</div>
+    <div class="condition-desc">Phytophthora infestans is a water mold that causes the serious potato and tomato disease known as late blight.</div>
+    <div class="severity-row">
+      <div class="sev-card">
+        <div class="sev-label">⚠ Severity</div>
+        <div class="sev-value">Moderate</div>
+      </div>
+      <div class="spread-card">
+        <div class="spread-label">↗ Spread Risk</div>
+        <div class="spread-value">High</div>
+      </div>
+    </div>
+    <div class="treat-title">Treatment Recommendations</div>
+    <div class="treat-item">Remove and destroy infected plant parts immediately.</div>
+    <div class="treat-item">Apply copper-based fungicides to surrounding healthy plants.</div>
+    <div class="treat-item">Avoid overhead watering to keep foliage dry.</div>
+    <button class="btn-report" onclick="alert('Generating full report PDF...')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> Download Full Report
+    </button>
+    <button class="btn-expert" onclick="goto('../Consult/consult.html')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Ask an Expert
+    </button>
+  </div>
+</div>
+
+<script>
+function goto(p){window.location.href = p;}
+function showHistory(){alert('Showing scan history...')}
+function triggerFileInput(){document.getElementById('fileInput').click()}
+function dragOver(e){e.preventDefault();document.getElementById('uploadZone').classList.add('dragover')}
+function dragLeave(){document.getElementById('uploadZone').classList.remove('dragover')}
+function dropFile(e){
+  e.preventDefault();
+  dragLeave();
+  const f=e.dataTransfer.files[0];
+  if(f&&f.type.startsWith('image/'))showPreview(f);
+}
+function fileSelected(e){
+  const f=e.target.files[0];
+  if(f)showPreview(f);
+}
+function showPreview(f){
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    document.getElementById('previewImg').src=ev.target.result;
+    document.getElementById('uploadZone').style.display='none';
+    document.getElementById('previewArea').style.display='block';
+    document.getElementById('analyzeBtn').style.display='block';
+    document.getElementById('analyzingState').style.display='none';
+  };
+  reader.readAsDataURL(f);
+}
+function analyzeImage(){
+  document.getElementById('analyzeBtn').style.display='none';
+  document.getElementById('analyzingState').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('analyzingState').style.display='none';
+    alert('Analysis complete! Condition detected: Tomato Late Blight (98% confidence). See the Analysis Result panel.');
+    document.getElementById('previewArea').style.display='none';
+    document.getElementById('uploadZone').style.display='block';
+  },2500);
+}
+function selectRecent(el,name){
+  document.querySelectorAll('.recent-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  alert('Loading analysis for: '+name);
+}
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>

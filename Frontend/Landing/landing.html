@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AgriSmart – Main Dashboard</title>
+<link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg-secondary);color:var(--text-primary);display:flex;height:100vh;overflow:hidden}
+.sidebar{width:200px;background:var(--bg-primary);border-right:1px solid var(--border-color);padding:16px 0;flex-shrink:0;display:flex;flex-direction:column}
+.brand{padding:0 16px 20px;display:flex;align-items:center;gap:10px}
+.brand-icon{width:36px;height:36px;background:#22c55e;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.brand-icon svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+.brand-name{font-size:14px;font-weight:800}
+.brand-sub{font-size:10px;color:var(--text-secondary)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;border-radius:8px;margin:1px 8px;transition:all .2s}
+.nav-item:hover{background:var(--bg-tertiary);color:var(--accent-color)}
+.nav-item.active{background:#22c55e;color:#fff;font-weight:600}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.sidebar-footer{margin-top:auto;padding:12px 16px;border-top:1px solid var(--border-color);display:flex;align-items:center;gap:10px}
+.avatar-sm{width:36px;height:36px;border-radius:50%;overflow:hidden}
+.avatar-sm img{width:100%;height:100%;object-fit:cover}
+.user-name{font-size:12px;font-weight:700}
+.user-role{font-size:10px;color:var(--text-muted)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--bg-primary);border-bottom:1px solid var(--border-color);padding:12px 24px;display:flex;align-items:center;gap:16px}
+.topbar h2{font-size:17px;font-weight:700;white-space:nowrap}
+.search-wrap{flex:1;max-width:380px;position:relative}
+.search-wrap input{width:100%;height:36px;border:1.5px solid var(--border-color);border-radius:20px;padding:0 16px 0 34px;font-size:13px;outline:none;background:var(--bg-secondary);font-family:'Inter',sans-serif}
+.search-wrap input:focus{border-color:#22c55e}
+.s-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%)}
+.s-icon svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);padding:6px;border-radius:8px;position:relative}
+.icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;display:block}
+.notif-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff}
+.status-badge{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#374151}
+.status-dot{width:8px;height:8px;background:#22c55e;border-radius:50%}
+.content{flex:1;overflow-y:auto;padding:24px}
+h1{font-size:26px;font-weight:900;margin-bottom:4px}
+.subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:20px}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.section-title{font-size:15px;font-weight:700}
+.view-all{font-size:13px;color:var(--accent-color);font-weight:600;cursor:pointer}
+.view-all:hover{text-decoration:underline}
+/* SENSOR CARDS */
+.sensor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.sensor-card{background:var(--bg-primary);border-radius:14px;border:1px solid var(--border-color);padding:18px;transition:box-shadow .2s}
+.sensor-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.sc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.sc-icon.blue{background:#eff6ff}
+.sc-icon.orange{background:#fff7ed}
+.sc-icon.teal{background:#f0fdfa}
+.sc-icon.yellow{background:#fefce8}
+.sc-icon svg{width:22px;height:22px;fill:none;stroke-width:2}
+.sc-icon.blue svg{stroke:#3b82f6}
+.sc-icon.orange svg{stroke:#f97316}
+.sc-icon.teal svg{stroke:#14b8a6}
+.sc-icon.yellow svg{stroke:#eab308}
+.sc-change{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
+.sc-change.up{background:#dcfce7;color:#16a34a}
+.sc-change.stable{background:#f3f4f6;color:#6b7280}
+.sc-change.down{background:#fee2e2;color:#dc2626}
+.sc-change.high{background:#fef3c7;color:#d97706}
+.sc-label{font-size:12px;color:#9ca3af;margin-bottom:6px}
+.sc-value{font-size:28px;font-weight:800;margin-bottom:8px}
+.sc-bar{height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden}
+.sc-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+.sc-bar-fill.blue{background:#3b82f6}
+.sc-bar-fill.teal{background:#14b8a6}
+.sc-minmax{display:flex;justify-content:space-between;font-size:10px;color:#9ca3af;margin-top:4px}
+.sc-blocks{display:flex;gap:4px;margin-top:6px}
+.sc-block{height:8px;width:20px;border-radius:3px}
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-bottom:20px}
+.chart-card{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:20px}
+.chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.chart-title{font-size:15px;font-weight:700}
+.chart-subtitle{font-size:12px;color:#9ca3af;margin-bottom:20px}
+.chart-select{border:1.5px solid #e5e7e5;border-radius:8px;padding:5px 10px;font-size:12px;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+/* BAR CHART */
+.bar-chart{display:flex;align-items:flex-end;gap:16px;height:160px;padding-top:10px}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.bar{width:60%;border-radius:6px 6px 0 0;transition:height .5s;cursor:pointer}
+.bar:hover{filter:brightness(.9)}
+.bar-lbl{font-size:11px;color:#9ca3af}
+.bar-tooltip{position:absolute;background:#1a2e1a;color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px;pointer-events:none;display:none;white-space:nowrap;z-index:10}
+/* HEALTH PANEL */
+.health-panel{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:20px}
+.health-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f3f4f6}
+.health-item:last-child{border-bottom:none}
+.hi-img{width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.hi-img img{width:100%;height:100%;object-fit:cover}
+.hi-info{flex:1}
+.hi-name{font-size:13px;font-weight:700}
+.hi-detail{font-size:11px;color:#9ca3af}
+.status-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.status-tag.red{background:#fee2e2;color:#dc2626}
+.status-tag.green{background:#dcfce7;color:#16a34a}
+.status-tag.yellow{background:#fef3c7;color:#d97706}
+.btn-health-report{width:100%;background:#f0fdf4;color:#16a34a;border:1.5px solid #bbf7d0;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;margin-top:14px;font-family:'Inter',sans-serif}
+.btn-health-report:hover{background:#dcfce7}
+/* BOTTOM STATS */
+.bottom-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.bs-card{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:18px;display:flex;align-items:center;gap:14px}
+.bs-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bs-icon.green{background:#dcfce7}
+.bs-icon.blue{background:#dbeafe}
+.bs-icon.lime{background:#f7fee7}
+.bs-icon svg{width:22px;height:22px;stroke-width:2;fill:none}
+.bs-icon.green svg{stroke:#16a34a}
+.bs-icon.blue svg{stroke:#3b82f6}
+.bs-icon.lime svg{stroke:#65a30d}
+.bs-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9ca3af}
+.bs-value{font-size:22px;font-weight:800}
+/* TODAY marker */
+.today-marker{position:relative}
+.today-tooltip{position:absolute;top:-36px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.today-tooltip::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#22c55e;border-bottom:none}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .sensor-grid{grid-template-columns:repeat(2,1fr)}
+  .main-grid{grid-template-columns:1fr;gap:16px}
+  .chart-card{height:300px}
+  .bottom-stats{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width: 768px) {
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .topbar{padding:12px 16px}
+  .topbar h2{font-size:16px}
+  .search-wrap{max-width:200px}
+  .content{padding:16px}
+  h1{font-size:22px}
+  .sensor-grid{grid-template-columns:1fr}
+  .main-grid{grid-template-columns:1fr}
+  .chart-card{height:250px}
+  .bottom-stats{grid-template-columns:1fr}
+  .health-panel{display:none}
+  .bs-card{flex-direction:column;text-align:center;gap:8px}
+}
+
+@media (max-width: 480px) {
+  .topbar{flex-wrap:wrap;gap:8px}
+  .topbar h2{order:1;width:100%;margin-bottom:8px}
+  .search-wrap{order:2;max-width:none;flex:1}
+  .topbar-right{order:3;margin-left:0}
+  .content{padding:12px}
+  h1{font-size:20px}
+  .section-header{flex-direction:column;gap:8px;align-items:flex-start}
+  .chart-card{height:200px}
+}
+</style>
+</head>
+<body>
+<!-- MOBILE SIDEBAR OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-sidebar" id="mobileSidebar">
+  <div class="mobile-header">
+    <div class="brand">
+      <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg></div>
+      <div><div class="brand-name">AgriSmart</div><div class="brand-sub">Farm Management</div></div>
+    </div>
+    <button class="close-btn" onclick="closeMobileMenu()">×</button>
+  </div>
+  <div class="mobile-nav">
+    <div class="nav-item active" onclick="goto('#')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard
+    </div>
+    <div class="nav-item" onclick="goto('../Disgnosis/index.html')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Diagnosis
+    </div>
+    <div class="nav-item" onclick="goto('../Risk/risk.html')">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alerts
+    </div>
+    <div class="nav-item" onclick="goto('../Sensor/sensor.html')">
+      <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg> Crop Health
+    </div>
+    <div class="nav-item" onclick="goto('../Consult/consult.html')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Consult
+    </div>
+    <div class="nav-item" onclick="goto('../Community/community.html')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Community
+    </div>
+    <div class="nav-item" onclick="goto('../Library/library.html')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Library
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="avatar-sm"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&q=80"/></div>
+    <div><div class="user-name">John Farmer</div><div class="user-role">Admin Account</div></div>
+  </div>
+</div>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg></div>
+    <div><div class="brand-name">AgriSmart</div><div class="brand-sub">Farm Management</div></div>
+  </div>
+  <div class="nav-item active">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard
+  </div>
+  <div class="nav-item" onclick="goto('../Disgnosis/index.html')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Diagnosis
+  </div>
+  <div class="nav-item" onclick="goto('../Risk/risk.html')">
+    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alerts
+  </div>
+  <div class="nav-item" onclick="goto('../Sensor/sensor.html')">
+    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg> Crop Health
+  </div>
+  <div class="nav-item" onclick="goto('../Consult/consult.html')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Consult
+  </div>
+  <div class="nav-item" onclick="goto('../Community/community.html')">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Community
+  </div>
+  <div class="nav-item" onclick="goto('../Library/library.html')">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Library
+  </div>
+  <div class="sidebar-footer">
+    <div class="avatar-sm"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&q=80"/></div>
+    <div><div class="user-name">John Farmer</div><div class="user-role">Admin Account</div></div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <h2>Main Dashboard</h2>
+    <div class="search-wrap">
+      <div class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <input type="text" placeholder="Search crops or sensors..."/>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" style="position:relative" onclick="alert('3 new notifications')">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="notif-dot"></div>
+      </button>
+      <button class="icon-btn" onclick="alert('Opening settings...')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 6.34l-1.41-1.41"/></svg>
+      </button>
+      <div class="status-badge"><div class="status-dot"></div> System Online</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>Dashboard Overview</h1>
+    <p class="subtitle">Real-time farm monitoring and sensor data across all sectors.</p>
+
+    <div class="section-header">
+      <div class="section-title">Real-Time Sensor Data</div>
+      <div class="view-all" onclick="goto('../Sensor/sensor.html')">View All Sensors</div>
+    </div>
+
+    <div class="sensor-grid">
+      <div class="sensor-card">
+        <div class="sc-top">
+          <div class="sc-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+          <div class="sc-change up">+2%</div>
+        </div>
+        <div class="sc-label">Soil Moisture</div>
+        <div class="sc-value">42%</div>
+        <div class="sc-bar"><div class="sc-bar-fill blue" style="width:42%"></div></div>
+      </div>
+      <div class="sensor-card">
+        <div class="sc-top">
+          <div class="sc-icon orange"><svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div>
+          <div class="sc-change stable">Stable</div>
+        </div>
+        <div class="sc-label">Air Temperature</div>
+        <div class="sc-value">24°C</div>
+        <div class="sc-minmax"><span>Min 18°</span><span>Max 29°</span></div>
+      </div>
+      <div class="sensor-card">
+        <div class="sc-top">
+          <div class="sc-icon teal"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+          <div class="sc-change down">-5%</div>
+        </div>
+        <div class="sc-label">Humidity</div>
+        <div class="sc-value">65%</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:65%;background:#14b8a6"></div></div>
+      </div>
+      <div class="sensor-card">
+        <div class="sc-top">
+          <div class="sc-icon yellow"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+          <div class="sc-change high">High</div>
+        </div>
+        <div class="sc-label">UV Index</div>
+        <div class="sc-value">6.2</div>
+        <div class="sc-blocks">
+          <div class="sc-block" style="background:#22c55e"></div>
+          <div class="sc-block" style="background:#22c55e"></div>
+          <div class="sc-block" style="background:#22c55e"></div>
+          <div class="sc-block" style="background:#eab308"></div>
+          <div class="sc-block" style="background:#e5e7eb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Soil Moisture Trends</div>
+            <div class="chart-subtitle">Historical moisture levels over the last 7 days</div>
+          </div>
+          <select class="chart-select" onchange="alert('Changing range to '+this.value)">
+            <option>Last 7 Days</option>
+            <option>Last 30 Days</option>
+            <option>Last 3 Months</option>
+          </select>
+        </div>
+        <div class="bar-chart" id="moistureChart">
+          <!-- bars rendered by JS -->
+        </div>
+      </div>
+      <div class="health-panel">
+        <div class="section-title" style="margin-bottom:14px">Crop Health Diagnoses</div>
+        <div class="health-item">
+          <div class="hi-img"><img src="https://images.unsplash.com/photo-1601379328950-93e9014bbfc8?w=100&q=80"/></div>
+          <div class="hi-info"><div class="hi-name">Corn Leaf Blight</div><div class="hi-detail">Detected in Sector 4B • 2h ago</div></div>
+          <div class="status-tag red">Action Needed</div>
+        </div>
+        <div class="health-item">
+          <div class="hi-img"><img src="https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=100&q=80"/></div>
+          <div class="hi-info"><div class="hi-name">Wheat Field Alpha</div><div class="hi-detail">Routine Scan • 5h ago</div></div>
+          <div class="status-tag green">Healthy</div>
+        </div>
+        <div class="health-item">
+          <div class="hi-img"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=100&q=80"/></div>
+          <div class="hi-info"><div class="hi-name">Soybean Rust</div><div class="hi-detail">Detected in Sector 2A • 1d ago</div></div>
+          <div class="status-tag yellow">Monitoring</div>
+        </div>
+        <button class="btn-health-report" onclick="goto('../Disgnosis/index.html')">Full Health Report</button>
+      </div>
+    </div>
+
+    <div class="bottom-stats">
+      <div class="bs-card">
+        <div class="bs-icon green"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <div><div class="bs-label">Estimated Yield</div><div class="bs-value">1,240 Tons</div></div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-icon blue"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div><div class="bs-label">Next Harvest</div><div class="bs-value">12 Days</div></div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-icon lime"><svg viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/></svg></div>
+        <div><div class="bs-label">Water Efficiency</div><div class="bs-value">94%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function goto(p){window.location.href = p}
+const days=['MON','TUE','WED','THU','FRI','SAT','SUN'];
+const vals=[35,40,38,50,42,30,28];
+const chart=document.getElementById('moistureChart');
+chart.innerHTML='';
+days.forEach((d,i)=>{
+  const isToday=d==='FRI';
+  const div=document.createElement('div');
+  div.className='bar-group'+(isToday?' today-marker':'');
+  const h=Math.round((vals[i]/70)*140);
+  div.innerHTML=`${isToday?'<div class="today-tooltip">42%<br>Today</div>':''}<div class="bar-wrap"><div class="bar" style="height:${h}px;background:${isToday?'#22c55e':'#bbf7d0'}" title="${d}: ${vals[i]}%"></div></div><div class="bar-lbl">${d}</div>`;
+  chart.appendChild(div);
+});
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriConnect – Create Account</title>
+  <link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-secondary); min-height: 100vh; display: flex; flex-direction: column; color: var(--text-primary); }
+
+    /* NAV */
+    nav { background: #fff; border-bottom: 1px solid #e2e8e2; padding: 14px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 38px; height: 38px; background: #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; }
+    .logo-text { font-size: 20px; font-weight: 800; color: #1a2e1a; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: #6b7280; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: #1a2e1a; }
+    .btn-nav { background: #22c55e; color: #fff; padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; text-decoration: none; border: none; }
+    .btn-nav:hover { background: #16a34a; }
+
+    /* MAIN */
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 24px; }
+    .container { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    /* HERO */
+    .hero {
+      border-radius: 28px; overflow: hidden; min-height: 580px;
+      background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80');
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column; justify-content: flex-end; position: relative;
+    }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 55%, rgba(0,0,0,.15) 100%); }
+    .hero-content { position: relative; z-index: 1; padding: 44px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,.2); border: 1px solid rgba(34,197,94,.4); backdrop-filter: blur(6px); color: #4ade80; border-radius: 999px; padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px; width: fit-content; }
+    .badge svg { width: 14px; height: 14px; stroke: #4ade80; fill: none; stroke-width: 2.5; }
+    .hero h2 { font-size: 42px; font-weight: 900; line-height: 1.15; color: #fff; margin-bottom: 20px; }
+    .hero h2 span { color: #22c55e; }
+    .hero p { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.7; max-width: 340px; margin-bottom: 36px; }
+    .stats { display: flex; gap: 40px; }
+    .stat-value { font-size: 26px; font-weight: 900; color: #22c55e; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+    /* FORM */
+    .form-panel { max-width: 420px; width: 100%; }
+    .form-panel h1 { font-size: 36px; font-weight: 900; color: #1a2e1a; margin-bottom: 6px; }
+    .form-panel .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 32px; }
+    .form-group { margin-bottom: 24px; position: relative; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #1a2e1a; margin-bottom: 8px; transition: all 0.2s ease; position: absolute; top: 16px; left: 44px; pointer-events: none; background: #f5f9f5; padding: 0 4px; z-index: 2; }
+    .input-wrap { position: relative; }
+    .input-wrap svg.icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: #9ca3af; fill: none; stroke-width: 2; pointer-events: none; transition: all 0.2s ease; z-index: 1; }
+    input[type="text"], input[type="email"], input[type="password"], select {
+      width: 100%; height: 56px; border: 2px solid #e2e8e2; border-radius: 16px;
+      padding: 20px 16px 8px 44px; font-size: 15px; color: #1a2e1a; background: #f5f9f5;
+      outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: 'Inter', sans-serif;
+      appearance: none; -webkit-appearance: none; position: relative;
+    }
+    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, select:focus {
+      border-color: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,0.1), 0 4px 12px rgba(34,197,94,0.15);
+      background: #fff; transform: translateY(-1px);
+    }
+    input[type="text"]:focus + label, input[type="email"]:focus + label, input[type="password"]:focus + label,
+    select:focus + label, input[type="text"]:not(:placeholder-shown) + label, input[type="email"]:not(:placeholder-shown) + label,
+    input[type="password"]:not(:placeholder-shown) + label, select:not([value=""]) + label {
+      top: 8px; font-size: 11px; color: #22c55e; font-weight: 700; letter-spacing: 0.5px;
+    }
+    input[type="text"]:focus ~ svg.icon, input[type="email"]:focus ~ svg.icon, input[type="password"]:focus ~ svg.icon, select:focus ~ svg.icon {
+      stroke: #22c55e; transform: translateY(-50%) scale(1.1);
+    }
+    input::placeholder { color: #9ca3af; opacity: 1; transition: opacity 0.2s ease; }
+    input:not(:placeholder-shown)::placeholder { opacity: 0; }
+    input:focus::placeholder { color: #9ca3af; }
+    .input-wrap:hover input:not(:focus) { border-color: #22c55e; background: #fff; }
+    .input-wrap:hover svg.icon { stroke: #22c55e; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .select-wrap { position: relative; }
+    .select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #6b7280; pointer-events: none; font-size: 14px; transition: all 0.2s ease; }
+    .select-wrap:focus-within::after { color: #22c55e; transform: translateY(-50%) rotate(180deg); }
+    .select-wrap select { padding-right: 40px; cursor: pointer; }
+    .select-wrap select option { padding: 8px; }
+
+    /* Validation States */
+    .input-wrap.success input { border-color: #22c55e; background: rgba(34,197,94,0.02); }
+    .input-wrap.success svg.icon { stroke: #22c55e; }
+    .input-wrap.success label { color: #22c55e; }
+    .input-wrap.success::after {
+      content: '✓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: #22c55e; font-size: 14px; font-weight: bold; pointer-events: none;
+    }
+    .input-wrap.error input { border-color: #ef4444; background: rgba(239,68,68,0.02); box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+    .input-wrap.error svg.icon { stroke: #ef4444; }
+    .input-wrap.error label { color: #ef4444; }
+    .input-wrap.error::after {
+      content: '✕'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: #ef4444; font-size: 14px; font-weight: bold; pointer-events: none;
+    }
+
+    /* CHECKBOX */
+    .terms-row { display: flex; align-items: flex-start; gap: 10px; margin: 20px 0 24px; }
+    .terms-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #22c55e; cursor: pointer; margin-top: 2px; flex-shrink: 0; }
+    .terms-row label { font-size: 14px; color: #6b7280; cursor: pointer; font-weight: 400; line-height: 1.5; }
+    .terms-row a { color: #22c55e; font-weight: 600; text-decoration: none; }
+    .terms-row a:hover { text-decoration: underline; }
+
+    /* BUTTONS */
+    .btn-primary {
+      width: 100%; height: 56px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #fff; border: none; border-radius: 16px; font-size: 16px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+      position: relative; overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover:not(:disabled)::before { left: 100%; }
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      box-shadow: 0 8px 24px rgba(34,197,94,0.4); transform: translateY(-2px);
+    }
+    .btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: 0 2px 8px rgba(34,197,94,0.3); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: 0 2px 8px rgba(34,197,94,0.2); }
+    .btn-primary svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; transition: transform 0.2s; }
+    .btn-primary:hover:not(:disabled) svg { transform: translateX(2px); }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 16px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #d1d5db; }
+    .divider span { font-size: 12px; color: #9ca3af; white-space: nowrap; }
+    .btn-secondary {
+      width: 100%; height: 52px; background: transparent; color: #1a2e1a; border: 2px solid #d1d5db;
+      border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: 'Inter', sans-serif;
+      position: relative; overflow: hidden;
+    }
+    .btn-secondary::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(26,46,26,0.05), transparent);
+      transition: left 0.5s;
+    }
+    .btn-secondary:hover::before { left: 100%; }
+    .btn-secondary:hover { background: rgba(26,46,26,0.02); border-color: #22c55e; color: #22c55e; transform: translateY(-1px); }
+    .btn-secondary:active { transform: translateY(0); }
+
+    /* FOOTER */
+    footer { background: #fff; border-top: 1px solid #e2e8e2; padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-brand { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #9ca3af; }
+    .footer-leaf { width: 24px; height: 24px; background: #22c55e; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .footer-leaf svg { width: 13px; height: 13px; stroke: #fff; fill: none; stroke-width: 2; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: #9ca3af; text-decoration: none; }
+    .footer-links a:hover { color: #1a2e1a; }
+
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      .hero { display: none; }
+      nav { padding: 14px 20px; }
+      main { padding: 40px 16px; }
+      footer { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href__="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+    </div>
+    <span class="logo-text">AgriConnect</span>
+  </a>
+  <div class="nav-links">
+    <a href="../Dashboard/dashboard.html">Home</a>
+    <a href="#">Marketplace</a>
+    <a href="#">Resources</a>
+    <a href="#">Support</a>
+    <a href="login.html" class="btn-nav">Sign In</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>
+          Join the Network
+        </div>
+        <h2>Empowering the <span>Next Generation</span> of Farmers</h2>
+        <p>Join over 50,000 professional farmers growing their business with real-time market insights and community support.</p>
+        <div class="stats">
+          <div>
+            <div class="stat-value">50k+</div>
+            <div class="stat-label">Active Members</div>
+          </div>
+          <div>
+            <div class="stat-value">120+</div>
+            <div class="stat-label">Agri Experts</div>
+          </div>
+          <div>
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-panel">
+      <h1>Create Your Account</h1>
+      <p class="subtitle">Ready to start? Fill in your farming details below.</p>
+
+      <form id="signupForm" onsubmit="handleSignup(event)">
+        <div class="form-group">
+         
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+            <input type="text" id="fullName" placeholder="Enter your full name" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            <input type="email" id="email" placeholder="Enter your email" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+         
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" placeholder="Create a password" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+            <input type="text" id="farmName" placeholder="e.g. Sunrise Organic Acres" required/>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+       
+            <div class="input-wrap">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input type="text" id="location" placeholder="City or Region" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            
+            <div class="input-wrap select-wrap">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <select id="crop" required>
+                <option value="" disabled selected>Select crop</option>
+                <option value="wheat">Wheat</option>
+                <option value="rice">Rice</option>
+                <option value="corn">Corn</option>
+                <option value="soybeans">Soybeans</option>
+                <option value="cotton">Cotton</option>
+                <option value="sugarcane">Sugarcane</option>
+                <option value="vegetables">Vegetables</option>
+                <option value="fruits">Fruits</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="terms-row">
+          <input type="checkbox" id="terms" onchange="toggleSubmit()"/>
+          <label for="terms">
+            I agree to the <a href__="#">Terms of Service</a> and <a href__="#">Privacy Policy</a>.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submitBtn" disabled>
+          Create Account
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </form>
+
+      <div class="divider"><span>Already have an account?</span></div>
+      <button class="btn-secondary" onclick="window.location.href='login.html'">
+       Log in to your Account
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-leaf">
+      <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg>
+    </div>
+    © 2024 AgriConnect Inc. All rights reserved.
+  </div>
+  <div class="footer-links">
+    <a href__="#">Help Center</a>
+    <a href__="#">Legal</a>
+    <a href__="#">Accessibility</a>
+  </div>
+</footer>
+
+<script>
+  function toggleSubmit() {
+    const cb = document.getElementById('terms');
+    document.getElementById('submitBtn').disabled = !cb.checked;
+  }
+
+  // Real-time validation
+  function validateField(field) {
+    const inputWrap = field.closest('.input-wrap');
+    const value = field.value.trim();
+
+    // Remove previous validation states
+    inputWrap.classList.remove('success', 'error');
+
+    if (field.hasAttribute('required') && value === '') {
+      return; // Don't show error for empty required fields until blur
+    }
+
+    switch(field.id) {
+      case 'fullName':
+        if (value.length >= 2) {
+          inputWrap.classList.add('success');
+        } else if (value.length > 0) {
+          inputWrap.classList.add('error');
+        }
+        break;
+      case 'email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(value)) {
+          inputWrap.classList.add('success');
+        } else if (value.length > 0) {
+          inputWrap.classList.add('error');
+        }
+        break;
+      case 'password':
+        if (value.length >= 8) {
+          inputWrap.classList.add('success');
+        } else if (value.length > 0) {
+          inputWrap.classList.add('error');
+        }
+        break;
+      case 'farmName':
+        if (value.length >= 3) {
+          inputWrap.classList.add('success');
+        } else if (value.length > 0) {
+          inputWrap.classList.add('error');
+        }
+        break;
+      case 'location':
+        if (value.length >= 2) {
+          inputWrap.classList.add('success');
+        } else if (value.length > 0) {
+          inputWrap.classList.add('error');
+        }
+        break;
+      case 'crop':
+        if (value !== '') {
+          inputWrap.classList.add('success');
+        }
+        break;
+    }
+  }
+
+  // Add validation listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+      input.addEventListener('input', () => validateField(input));
+      input.addEventListener('blur', () => validateField(input));
+      input.addEventListener('focus', () => {
+        input.closest('.input-wrap').classList.remove('success', 'error');
+      });
+    });
+  });
+
+  function handleSignup(e) {
+    e.preventDefault();
+
+    // Validate all fields before submission
+    const inputs = document.querySelectorAll('input[required], select[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        input.closest('.input-wrap').classList.add('error');
+        isValid = false;
+      }
+    });
+
+    if (!isValid) return;
+
+    const name = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const farm = document.getElementById('farmName').value;
+    const location = document.getElementById('location').value;
+    const crop = document.getElementById('crop').value;
+    const btn = document.getElementById('submitBtn');
+
+    btn.innerHTML = '<div style="width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin 1s linear infinite;margin-right:8px;"></div>Creating account…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      // Store user data in localStorage
+      const user = { name, email, password, farm, location, crop };
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('loggedIn', 'true');
+      // Redirect to dashboard after signup
+      window.location.href = '../Dashboard/dashboard.html';
+    }, 2000);
+  }
+</script>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+<script src="../theme.js"></script>
+</body>
+</html>

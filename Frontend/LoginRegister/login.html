@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriSmart – Farmer Login</title>
+  <link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-secondary); min-height: 100vh; display: flex; flex-direction: column; color: var(--text-primary); }
+
+    /* NAV */
+    nav { background: var(--bg-primary); border-bottom: 1px solid var(--border-color); padding: 14px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 38px; height: 38px; background: #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; }
+    .logo-text { font-size: 20px; font-weight: 800; color: #1a2e1a; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: #6b7280; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: #1a2e1a; }
+    .btn-nav { background: transparent; border: 2px solid #22c55e; color: #22c55e; padding: 8px 20px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; text-decoration: none; }
+    .btn-nav:hover { background: #22c55e; color: #fff; }
+
+    /* MAIN */
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 24px; }
+    .container { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    /* HERO */
+    .hero { background: #e6f4e6; border-radius: 28px; padding: 48px 40px 0; position: relative; overflow: hidden; min-height: 520px; display: flex; flex-direction: column; }
+    .hero-bg-icon { position: absolute; top: 32px; right: 32px; opacity: .05; }
+    .hero-bg-icon svg { width: 160px; height: 160px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,.15); color: #16a34a; border-radius: 999px; padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 24px; width: fit-content; }
+    .badge svg { width: 14px; height: 14px; stroke: #16a34a; fill: none; stroke-width: 2.5; }
+    .hero h2 { font-size: 42px; font-weight: 900; line-height: 1.15; color: #1a2e1a; margin-bottom: 20px; }
+    .hero h2 span { color: #22c55e; }
+    .hero p { font-size: 15px; color: #5a7a5a; line-height: 1.7; max-width: 320px; margin-bottom: 40px; }
+
+    /* CHART CARD */
+    .chart-card { background: #fff; border-radius: 20px; padding: 20px 20px 12px; box-shadow: 0 8px 32px rgba(0,0,0,.1); margin-top: auto; }
+    .chart-header { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+    .chart-icon { width: 44px; height: 44px; background: rgba(34,197,94,.12); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .chart-icon svg { width: 22px; height: 22px; stroke: #22c55e; fill: none; stroke-width: 2; }
+    .chart-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #9ca3af; }
+    .chart-value { font-size: 20px; font-weight: 900; color: #1a2e1a; }
+    .bars { display: flex; align-items: flex-end; gap: 8px; height: 80px; padding-top: 8px; }
+    .bar { flex: 1; border-radius: 6px 6px 0 0; transition: transform .2s; }
+    .bar:hover { transform: scaleY(1.05); transform-origin: bottom; }
+
+    /* FORM PANEL */
+    .form-panel { max-width: 400px; width: 100%; }
+    .form-panel h1 { font-size: 36px; font-weight: 900; color: #1a2e1a; margin-bottom: 6px; }
+    .form-panel .subtitle { font-size: 14px; color: #6b7280; margin-bottom: 32px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #1a2e1a; margin-bottom: 8px; }
+    .label-row { display: flex; justify-content: space-between; align-items: center; }
+    .forgot { font-size: 13px; font-weight: 600; color: #22c55e; text-decoration: none; }
+    .forgot:hover { text-decoration: underline; }
+    .input-wrap { position: relative; }
+    .input-wrap svg.icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: #9ca3af; fill: none; stroke-width: 2; pointer-events: none; }
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%; height: 48px; border: 1.5px solid #d1d5db; border-radius: 14px;
+      padding: 0 44px; font-size: 14px; color: #1a2e1a; background: #f5f9f5;
+      outline: none; transition: border-color .2s, box-shadow .2s; font-family: 'Inter', sans-serif;
+    }
+    input:focus { border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+    .toggle-pw { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 0; color: #9ca3af; }
+    .toggle-pw:hover { color: #1a2e1a; }
+    .toggle-pw svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .checkbox-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+    .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #22c55e; cursor: pointer; }
+    .checkbox-row label { font-size: 14px; color: #6b7280; cursor: pointer; margin-bottom: 0; font-weight: 400; }
+    .btn-primary { width: 100%; height: 52px; background: #22c55e; color: #fff; border: none; border-radius: 999px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .2s, box-shadow .2s; box-shadow: 0 8px 24px rgba(34,197,94,.3); }
+    .btn-primary:hover { background: #16a34a; box-shadow: 0 8px 32px rgba(34,197,94,.4); }
+    .btn-primary svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; }
+    .divider { text-align: center; font-size: 13px; color: #9ca3af; margin: 24px 0 16px; }
+    .btn-secondary { width: 100%; height: 52px; background: transparent; color: #1a2e1a; border: 2px solid #d1d5db; border-radius: 999px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: 'Inter', sans-serif; }
+    .btn-secondary:hover { background: #f5f9f5; border-color: #22c55e; }
+
+    /* FOOTER */
+    footer { background: #fff; border-top: 1px solid #e2e8e2; padding: 18px 48px; text-align: center; font-size: 13px; color: #9ca3af; }
+
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      .hero { display: none; }
+      nav { padding: 14px 20px; }
+      main { padding: 40px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href__="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/><path d="M12 6v6l4 2"/></svg>
+    </div>
+    <span class="logo-text">AgriSmart</span>
+  </a>
+  <div class="nav-links">
+    <a href="../Dashboard/dashboard.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Support</a>
+    <a href="register.html" class="btn-nav">Create a new farm account</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17h1v1H3zm4-4h1v1H7zm4-2h1v1h-1zm4 1h1v1h-1zm4-3h1v1h-1zM1 21h22v2H1z"/></svg>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>
+        Verified Agricultural Tech
+      </div>
+      <h2>Manage your farm <span>smarter</span> than ever.</h2>
+      <p>Access real-time soil analytics, crop health monitoring, and automated irrigation controls in one dashboard.</p>
+
+      <!-- Chart Card -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg>
+          </div>
+          <div>
+            <div class="chart-label">Live Yield Forecast</div>
+            <div class="chart-value">+12.4% Increase</div>
+          </div>
+        </div>
+        <div class="bars">
+          <div class="bar" style="height:25%; background:#bbf7d0;"></div>
+          <div class="bar" style="height:35%; background:#bbf7d0;"></div>
+          <div class="bar" style="height:48%; background:#86efac;"></div>
+          <div class="bar" style="height:65%; background:#4ade80;"></div>
+          <div class="bar" style="height:82%; background:#22c55e;"></div>
+          <div class="bar" style="height:100%; background:#16a34a;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-panel">
+      <h1>Farmer Login</h1>
+      <p class="subtitle">Welcome back to your AgriSmart dashboard</p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            <input type="email" id="email" placeholder="Enter your registered email" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="password">Password</label>
+            <a href__="#" class="forgot">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" placeholder="Enter your password" required/>
+            <button type="button" class="toggle-pw" onclick="togglePassword()">
+              <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="remember"/>
+          <label for="remember">Remember my farm</label>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Login to Dashboard
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+        </button>
+      </form>
+
+      <p class="divider">New to AgriSmart?</p>
+      <button class="btn-secondary" onclick="window.location.href='register.html'">
+        Create Account
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<footer>© 2024 AgriSmart Agricultural Systems. All rights reserved.</footer>
+
+<script>
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+    } else {
+      pw.type = 'password';
+      icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const btn = e.target.querySelector('.btn-primary');
+    btn.textContent = 'Logging in…';
+    btn.disabled = true;
+    setTimeout(() => {
+      // Check credentials
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user.email === email && user.password === password) {
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = '../Dashboard/dashboard.html';
+      } else {
+        alert('Invalid email or password');
+        btn.textContent = 'Login to Dashboard';
+        btn.disabled = false;
+      }
+    }, 1500);
+  }
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* Theme Variables */
+:root {
+    /* Light Theme */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6c757d;
+    --text-muted: #adb5bd;
+    --border-color: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --accent-color: #00c853;
+    --accent-hover: #00a844;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #404040;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #888888;
+    --border-color: #555555;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --accent-color: #00c853;
+    --accent-hover: #00a844;
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--border-color) !important;
+    box-shadow: 0 2px 10px var(--shadow) !important;
+}
+
+#theme-toggle:hover {
+    background: var(--bg-secondary) !important;
+    transform: scale(1.05);
+}

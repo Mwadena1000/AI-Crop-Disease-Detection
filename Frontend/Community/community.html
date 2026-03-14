@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AgriSmart – Community</title>
+<link href__="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg-secondary);color:var(--text-primary);display:flex;flex-direction:column;min-height:100vh}
+a{text-decoration:none;color:inherit}
+/* LAYOUT */
+.app{display:flex;height:100vh;overflow:hidden}
+/* SIDEBAR */
+.sidebar{width:200px;background:#fff;border-right:1px solid #e5e7e5;display:flex;flex-direction:column;padding:16px 0;flex-shrink:0}
+.sidebar-brand{padding:0 16px 20px;display:flex;align-items:center;gap:10px}
+.brand-icon{width:36px;height:36px;background:#22c55e;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.brand-icon svg{stroke:#fff;fill:none;stroke-width:2;width:18px;height:18px}
+.brand-name{font-size:15px;font-weight:800;line-height:1.1}
+.brand-sub{font-size:10px;color:#22c55e;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;font-weight:500;color:#6b7280;cursor:pointer;border-radius:8px;margin:1px 8px;transition:all .2s}
+.nav-item:hover{background:#f0fdf4;color:#16a34a}
+.nav-item.active{background:#f0fdf4;color:#16a34a;font-weight:600}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.sidebar-footer{margin-top:auto;padding:12px 16px;border-top:1px solid #e5e7e5;display:flex;align-items:center;gap:10px}
+.avatar-sm{width:34px;height:34px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#16a34a;overflow:hidden}
+.avatar-sm img{width:100%;height:100%;object-fit:cover}
+.user-info{flex:1}
+.user-name{font-size:12px;font-weight:700}
+.user-role{font-size:10px;color:#22c55e}
+.gear-btn{color:#9ca3af;cursor:pointer;font-size:16px}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:#fff;border-bottom:1px solid #e5e7e5;padding:10px 24px;display:flex;align-items:center;gap:16px}
+.search-box{flex:1;max-width:480px;position:relative}
+.search-box input{width:100%;height:36px;border:1.5px solid #e5e7e5;border-radius:20px;padding:0 16px 0 36px;font-size:13px;outline:none;background:#f9fafb;font-family:'Inter',sans-serif}
+.search-box input:focus{border-color:#22c55e}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9ca3af}
+.search-icon svg{width:14px;height:14px;stroke:#9ca3af;fill:none;stroke-width:2}
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
+.bell-btn{background:none;border:none;cursor:pointer;color:#6b7280;padding:6px}
+.bell-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-new{background:#22c55e;color:#fff;border:none;border-radius:20px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif}
+.btn-new:hover{background:#16a34a}
+.btn-new svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
+/* CONTENT */
+.content{flex:1;display:flex;overflow:hidden}
+.feed{flex:1;overflow-y:auto;padding:24px}
+.right-panel{width:260px;overflow-y:auto;padding:20px 16px;background:#fff;border-left:1px solid #e5e7e5;flex-shrink:0}
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:2px solid #e5e7e5;margin-bottom:20px}
+.tab{padding:10px 16px;font-size:14px;font-weight:500;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab.active{color:#22c55e;border-bottom-color:#22c55e;font-weight:600}
+.tab:hover{color:#22c55e}
+/* POST BOX */
+.post-box{background:#fff;border-radius:14px;border:1px solid #e5e7e5;padding:16px;margin-bottom:20px}
+.post-input-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.post-input{flex:1;border:none;background:#f5f7f5;border-radius:20px;padding:10px 16px;font-size:13px;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;outline:none}
+.post-actions{display:flex;align-items:center;gap:12px}
+.post-action-btn{background:none;border:none;cursor:pointer;padding:6px;color:#9ca3af}
+.post-action-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.post-submit{background:#22c55e;color:#fff;border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;font-family:'Inter',sans-serif}
+.post-submit:hover{background:#16a34a}
+/* CARDS */
+.post-card{background:#fff;border-radius:14px;border:1px solid #e5e7e5;margin-bottom:16px;overflow:hidden;transition:box-shadow .2s}
+.post-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.card-inner{display:flex;gap:0}
+.card-img{width:200px;flex-shrink:0}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.card-body{padding:18px;flex:1}
+.cat-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+.cat-pest{background:#fef9c3;color:#a16207}
+.cat-irrigation{background:#dbeafe;color:#1d4ed8}
+.cat-livestock{background:#fce7f3;color:#9d174d}
+.card-time{font-size:11px;color:#9ca3af;margin-left:8px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:6px;line-height:1.3}
+.card-excerpt{font-size:13px;color:#6b7280;line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-footer{display:flex;align-items:center;gap:12px}
+.author-row{display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280}
+.author-row img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+.stat{display:flex;align-items:center;gap:4px;font-size:12px;color:#6b7280}
+.stat svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-join{background:#22c55e;color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;margin-left:auto;font-family:'Inter',sans-serif}
+.btn-join:hover{background:#16a34a}
+/* RIGHT PANEL */
+.rp-section{margin-bottom:24px}
+.rp-title{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rp-title svg{width:16px;height:16px;stroke:#22c55e;fill:none;stroke-width:2.5}
+.contributor-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.contributor-row img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.contrib-info .name{font-size:13px;font-weight:600}
+.contrib-info .role{font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em}
+.contrib-pts{font-size:13px;font-weight:700;color:#22c55e;margin-left:auto}
+.view-lb{color:#22c55e;font-size:12px;font-weight:600;cursor:pointer;display:block;text-align:center;margin-top:4px}
+.view-lb:hover{text-decoration:underline}
+.group-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #e5e7e5;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.group-row:hover{border-color:#22c55e;background:#f0fdf4}
+.group-name{font-size:13px;font-weight:500}
+.group-count{font-size:12px;color:#9ca3af}
+.topic-tags{display:flex;flex-wrap:wrap;gap:8px}
+.topic-tag{background:#f3f4f6;color:#374151;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.topic-tag:hover{background:#dcfce7;color:#16a34a}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;width:520px;max-width:90vw}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:16px}
+.modal textarea{width:100%;border:1.5px solid #e5e7e5;border-radius:10px;padding:12px;font-size:14px;font-family:'Inter',sans-serif;resize:vertical;min-height:100px;outline:none}
+.modal textarea:focus{border-color:#22c55e}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+.btn-cancel{background:none;border:1.5px solid #e5e7e5;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px}
+.btn-post{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 3.5-2 6.5-5 8.2V21H8v-1.8C5 17.5 3 14.5 3 11a9 9 0 0 1 9-9z"/></svg>
+      </div>
+      <div><div class="brand-name">AgriSmart</div><div class="brand-sub">Farmer Community</div></div>
+    </div>
+    <div class="nav-item" onclick="goto('../Landing/landing.html')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard
+    </div>
+    <div class="nav-item" onclick="goto('../Disgnosis/index.html')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Diagnosis
+    </div>
+    <div class="nav-item" onclick="goto('../Risk/risk.html')">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14h18V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Marketplace
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Community
+    </div>
+    <div class="nav-item" onclick="goto('../Consult/consult.html')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Consult
+    </div>
+    <div class="nav-item" onclick="goto('../Library/library.html')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Library
+    </div>
+  
+    <div class="sidebar-footer">
+      <div class="avatar-sm"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="user"/></div>
+      <div class="user-info"><div class="user-name">Samuel Green</div><div class="user-role">Premium Member</div></div>
+      <span class="gear-btn">⚙</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="search-box">
+        <div class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <input type="text" placeholder="Search discussions, experts, or tech..."/>
+      </div>
+      <div class="topbar-actions">
+        <button class="bell-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+        <button class="btn-new" onclick="openModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Post
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="feed">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'trending')">Trending</div>
+          <div class="tab" onclick="switchTab(this,'recent')">Recent</div>
+          <div class="tab" onclick="switchTab(this,'myposts')">My Posts</div>
+        </div>
+
+        <!-- POST BOX -->
+        <div class="post-box">
+          <div class="post-input-row">
+            <div class="avatar-sm"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""/></div>
+            <input class="post-input" type="text" placeholder="Share an update or ask about farming tech..." onclick="openModal()"/>
+          </div>
+          <div class="post-actions">
+            <button class="post-action-btn" title="Image"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></button>
+            <button class="post-action-btn" title="Video"><svg viewBox="0 0 24 24"><polygon points="23,7 16,12 23,17 23,7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
+            <button class="post-action-btn" title="Poll"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></button>
+            <button class="post-submit" onclick="openModal()">Post</button>
+          </div>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="post-card" id="posts-trending">
+          <div class="card-inner">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&q=80" alt="Tomato Blight"/></div>
+            <div class="card-body">
+              <div><span class="cat-badge cat-pest">Pest Control</span><span class="card-time">2 hours ago</span></div>
+              <div class="card-title">Effective Pest Control for Tomato Blight</div>
+              <div class="card-excerpt">Does anyone have recommendations for organic pesticides? Seeing early signs of blight on my...</div>
+              <div class="card-footer">
+                <div class="author-row"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&q=80" alt=""/>John Doe</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 24</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/></svg> 142</div>
+                <button class="btn-join">Join Discussion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80" alt="Irrigation"/></div>
+            <div class="card-body">
+              <div><span class="cat-badge cat-irrigation">Irrigation Tech</span><span class="card-time">5 hours ago</span></div>
+              <div class="card-title">Solar-Powered Drip Irrigation: Worth the Investment?</div>
+              <div class="card-excerpt">I'm considering switching my 10-acre plot to a fully automated solar system. Has anyone calculated t...</div>
+              <div class="card-footer">
+                <div class="author-row"><img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=100&q=80" alt=""/>Dr. Sarah Miller</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 56</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/></svg> 310</div>
+                <button class="btn-join">Join Discussion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=400&q=80" alt="Cattle"/></div>
+            <div class="card-body">
+              <div><span class="cat-badge cat-livestock">Livestock</span><span class="card-time">Yesterday</span></div>
+              <div class="card-title">Rotational Grazing Strategies for Small Herds</div>
+              <div class="card-excerpt">Testing a 4-field rotation system this season. The clover growth has been exceptional compared to...</div>
+              <div class="card-footer">
+                <div class="author-row"><img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=100&q=80" alt=""/>Mike Thompson</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 18</div>
+                <div class="stat"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/></svg> 89</div>
+                <button class="btn-join">Join Discussion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right-panel">
+        <div class="rp-section">
+          <div class="rp-title">🏆 Top Contributors</div>
+          <div class="contributor-row">
+            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=100&q=80" alt="Sarah"/>
+            <div class="contrib-info"><div class="name">Dr. Sarah Miller</div><div class="role">Agro-Engineer</div></div>
+            <div class="contrib-pts">1.2k pts</div>
+          </div>
+          <div class="contributor-row">
+            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&q=80" alt="John"/>
+            <div class="contrib-info"><div class="name">John Doe</div><div class="role">Organic Specialist</div></div>
+            <div class="contrib-pts">980 pts</div>
+          </div>
+          <div class="contributor-row">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Elena"/>
+            <div class="contrib-info"><div class="name">Elena Rodriguez</div><div class="role">Climate Watch</div></div>
+            <div class="contrib-pts">850 pts</div>
+          </div>
+          <a class="view-lb" href__="#">View Leaderboard</a>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Active Groups</div>
+          <div class="group-row"><span class="group-name">Hydroponics Hub</span><span class="group-count">4.2k</span></div>
+          <div class="group-row"><span class="group-name">Precision Farming</span><span class="group-count">2.8k</span></div>
+          <div class="group-row"><span class="group-name">Sustainable Soil</span><span class="group-count">1.5k</span></div>
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-title">🔥 Trending Topics</div>
+          <div class="topic-tags">
+            <span class="topic-tag">#WheatYield2024</span>
+            <span class="topic-tag">#IoT</span>
+            <span class="topic-tag">#DroughtResistant</span>
+            <span class="topic-tag">#Pesticides</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="postModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-title">Share with the Community</div>
+    <textarea id="postText" placeholder="Share an update, ask a question, or post a tip about farming..."></textarea>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-post" onclick="submitPost()">Post</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function goto(p){window.location.href = p;}
+function openModal(){document.getElementById('postModal').classList.add('open')}
+function closeModal(){document.getElementById('postModal').classList.remove('open')}
+function closeModalOutside(e){if(e.target===document.getElementById('postModal'))closeModal()}
+function submitPost(){
+  const t=document.getElementById('postText').value.trim();
+  if(!t){alert('Please write something first!');return}
+  alert('Posted: "'+t.substring(0,50)+(t.length>50?'...':'')+'"');
+  document.getElementById('postText').value='';
+  closeModal();
+}
+function switchTab(el,tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  if(tab==='myposts'){alert('Showing your posts...')}
+}
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>
