@@ -21,10 +21,14 @@
     <div class="mobile-overlay" id="mobileOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
         <button class="mobile-menu-close" id="mobileMenuClose"><i class="fas fa-times"></i></button>
-        <a href="#features">Dashboard</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
         <a href="../Community/community.html">Community</a>
-        <a href="../Library/library.html">Library</a>
-        <a href="#" id="logoutMobile">Logout</a>
+        <a href="../Library/library.html">Resources</a>
+        <div class="mobile-menu-actions">
+            <a href="../LoginRegister/login.html" class="btn-nav">Login</a>
+            <a href="../LoginRegister/register.html" class="btn-primary">Get Started</a>
+        </div>
     </div>
 
     <!-- ========== NAVBAR ========== -->
@@ -34,87 +38,439 @@
             AgriSmart
         </a>
         <ul class="navbar-links">
-            <li><a href="#features" class="active" data-section="features">Dashboard</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="../Community/community.html">Community</a></li>
-            <li><a href="../Library/library.html">Library</a></li>
+            <li><a href="../Library/library.html">Resources</a></li>
         </ul>
         <div class="navbar-right">
             <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
-            <div class="user-dropdown-wrapper">
-                <div class="user-avatar" id="userAvatar">
-                    <img src="https://i.pravatar.cc/36?img=12" alt="User">
-                </div>
-                <div class="user-dropdown" id="userDropdown">
-                    <a href="#"><i class="fas fa-user"></i> Profile</a>
-                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                    <a href="../Community/community.html"><i class="fas fa-users"></i> Community</a>
-                    <a href="../Library/library.html"><i class="fas fa-book"></i> Library</a>
-                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </div>
+            <div class="navbar-actions">
+                <a href="../LoginRegister/login.html" class="btn-nav">Login</a>
+                <a href="../LoginRegister/register.html" class="btn-primary">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <!-- ========== DASHBOARD ========== -->
-    <section class="dashboard" id="features">
-        <div class="dashboard-header">
-            <div class="section-label">Welcome back, <span id="userName"></span></div>
-            <h2 class="dashboard-title">Your AgriSmart Dashboard</h2>
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i>
+                <span>Trusted by 10,000+ Farmers Worldwide</span>
+            </div>
+            <h1 class="hero-title">
+                Revolutionize Your Farming with
+                <span class="highlight">AI-Powered</span> Agriculture
+            </h1>
+            <p class="hero-subtitle">
+                Transform your farm into a smart, sustainable operation with real-time monitoring,
+                AI disease detection, and predictive analytics. Increase yields by up to 40% while
+                reducing costs and environmental impact.
+            </p>
+            <div class="hero-buttons">
+                <a href="../Disgnosis/index.html" class="btn-primary">
+                    <i class="fas fa-camera"></i>
+                    Start AI Diagnosis
+                </a>
+                <a href="../Sensor/sensor.html" class="btn-secondary">
+                    <i class="fas fa-chart-line"></i>
+                    View Live Sensors
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Yield Increase</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+            </div>
         </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon green">
-                    <i class="fas fa-layer-group"></i>
+        <div class="hero-visual">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Smart Farming">
+                <div class="floating-card card-1">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span>28°C</span>
                 </div>
-                <h3>Real-time Data</h3>
-                <p>Monitor soil moisture, temperature, and localized weather conditions instantly from your mobile or desktop.</p>
-                <a href="../Sensor/sensor.html" style="color:#00c853;font-weight:700;">Access Sensors</a>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon blue">
-                    <i class="fas fa-map-marker-alt"></i>
+                <div class="floating-card card-2">
+                    <i class="fas fa-tint"></i>
+                    <span>65% Moisture</span>
                 </div>
-                <h3>AI Diagnosis</h3>
-                <p>Identify crop diseases and pest infestations using our advanced computer vision algorithms trained on millions of images.</p>
-                <a href="../Disgnosis/index.html" style="color:#00c853;font-weight:700;">Diagnose Now</a>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon dark">
-                    <i class="fas fa-shield-alt"></i>
+                <div class="floating-card card-3">
+                    <i class="fas fa-leaf"></i>
+                    <span>Healthy Crop</span>
                 </div>
-                <h3>Risk Mitigation</h3>
-                <p>Minimize financial losses with predictive alerts for extreme weather events and real-time market price trends.</p>
-               <a href="../Risk/risk.html" style="color:#00c853;font-weight:700; margin-top:5px ;">View Risks</a>
             </div>
         </div>
     </section>
+
+    <!-- ========== STATS SECTION ========== -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Active Farmers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Acres Monitored</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Awards Won</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FEATURES SECTION ========== -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Features</div>
+                <h2 class="section-title">Everything You Need for Smart Farming</h2>
+                <p class="section-subtitle">
+                    Comprehensive tools and insights to optimize your farming operations
+                    and maximize your harvest potential.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon green">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Real-time Data Monitoring</h3>
+                    <p>Monitor soil moisture, temperature, humidity, and weather conditions instantly from your mobile or desktop with IoT sensors.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Live sensor data</li>
+                        <li><i class="fas fa-check"></i> Weather integration</li>
+                        <li><i class="fas fa-check"></i> Automated alerts</li>
+                    </ul>
+                    <a href="../Sensor/sensor.html" class="feature-link">
+                        <span>Access Sensors</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon blue">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Disease Detection</h3>
+                    <p>Identify crop diseases and pest infestations using advanced computer vision algorithms trained on millions of agricultural images.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> 95% accuracy rate</li>
+                        <li><i class="fas fa-check"></i> Instant diagnosis</li>
+                        <li><i class="fas fa-check"></i> Treatment recommendations</li>
+                    </ul>
+                    <a href="../Disgnosis/index.html" class="feature-link">
+                        <span>Diagnose Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Risk Mitigation</h3>
+                    <p>Minimize financial losses with predictive alerts for extreme weather events, market price trends, and crop health issues.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Weather predictions</li>
+                        <li><i class="fas fa-check"></i> Market insights</li>
+                        <li><i class="fas fa-check"></i> Insurance optimization</li>
+                    </ul>
+                    <a href="../Risk/risk.html" class="feature-link">
+                        <span>View Risks</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon orange">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Connect with fellow farmers, share experiences, and learn from agricultural experts in our vibrant community platform.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Expert consultations</li>
+                        <li><i class="fas fa-check"></i> Knowledge sharing</li>
+                        <li><i class="fas fa-check"></i> Local networking</li>
+                    </ul>
+                    <a href="../Community/community.html" class="feature-link">
+                        <span>Join Community</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon teal">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Knowledge Library</h3>
+                    <p>Access comprehensive agricultural resources, best practices, research papers, and educational content from global experts.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Research papers</li>
+                        <li><i class="fas fa-check"></i> Best practices</li>
+                        <li><i class="fas fa-check"></i> Video tutorials</li>
+                    </ul>
+                    <a href="../Library/library.html" class="feature-link">
+                        <span>Explore Library</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon red">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Get detailed insights and analytics about your farm performance, crop health trends, and optimization recommendations.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Performance metrics</li>
+                        <li><i class="fas fa-check"></i> Trend analysis</li>
+                        <li><i class="fas fa-check"></i> ROI tracking</li>
+                    </ul>
+                    <a href="#analytics" class="feature-link">
+                        <span>View Analytics</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== HOW IT WORKS SECTION ========== -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Process</div>
+                <h2 class="section-title">How AgriSmart Works</h2>
+                <p class="section-subtitle">
+                    Get started in just three simple steps and transform your farming operation
+                </p>
+            </div>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Install Sensors</h3>
+                    <p>Deploy our IoT sensors across your fields for real-time data collection of soil moisture, temperature, and environmental conditions.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>AI Analysis</h3>
+                    <p>Use our mobile app to capture crop images. Our AI instantly analyzes for diseases, pests, and nutrient deficiencies.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Get Insights</h3>
+                    <p>Receive personalized recommendations, predictive alerts, and actionable insights to optimize your farming decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS SECTION ========== -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Testimonials</div>
+                <h2 class="section-title">What Farmers Say About Us</h2>
+                <p class="section-subtitle">
+                    Real stories from farmers who have transformed their operations with AgriSmart
+                </p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "AgriSmart helped me increase my tomato yield by 45% in just one season.
+                        The AI disease detection caught early blight before it spread, saving me thousands."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=1" alt="Maria Rodriguez">
+                        <div>
+                            <div class="author-name">Maria Rodriguez</div>
+                            <div class="author-title">Organic Farmer, California</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "The real-time monitoring system alerted me to irrigation issues before my crops suffered.
+                        I've never had such peace of mind during the growing season."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=2" alt="John Chen">
+                        <div>
+                            <div class="author-name">John Chen</div>
+                            <div class="author-title">Rice Farmer, Texas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "As a small family farm, we couldn't afford expensive consultants.
+                        AgriSmart's community and AI tools give us expert-level insights at a fraction of the cost."
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=3" alt="Sarah Johnson">
+                        <div>
+                            <div class="author-name">Sarah Johnson</div>
+                            <div class="author-title">Family Farm Owner, Iowa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA SECTION ========== -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Farm?</h2>
+                <p>Join thousands of farmers who are already using AgriSmart to increase yields, reduce costs, and farm more sustainably.</p>
+                <div class="cta-buttons">
+                    <a href="../LoginRegister/register.html" class="btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Get Started Free
+                    </a>
+                    <a href="../Consult/consult.html" class="btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        Schedule Demo
+                    </a>
+                </div>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>14-day free trial</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No credit card required</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Cancel anytime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-seedling"></i>
+                        AgriSmart
+                    </div>
+                    <p>Revolutionizing agriculture with AI-powered smart farming solutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="../Sensor/sensor.html">Sensors</a>
+                        <a href="../Disgnosis/index.html">AI Diagnosis</a>
+                        <a href="../Risk/risk.html">Risk Management</a>
+                        <a href="#analytics">Analytics</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <a href="../Community/community.html">Forum</a>
+                        <a href="../Consult/consult.html">Consultation</a>
+                        <a href="../Library/library.html">Knowledge Base</a>
+                        <a href="#">Events</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Press</a>
+                        <a href="#">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Documentation</a>
+                        <a href="#">API</a>
+                        <a href="#">Status</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AgriSmart. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
 
     <!-- ========== JAVASCRIPT ========== -->
     <script>
-        // Check authentication
-        if (!localStorage.getItem('loggedIn')) {
-            window.location.href = '../LoginRegister/login.html';
-        }
-
-        // Get user data
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        document.getElementById('userName').textContent = user.name || 'User';
-        document.getElementById('userAvatar').nextElementSibling.querySelector('a:first-child').textContent = user.name || 'Profile';
-
-        // Logout function
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('loggedIn');
-            window.location.href = '../LoginRegister/login.html';
-        });
-
-        // Mobile logout
-        document.getElementById('logoutMobile').addEventListener('click', () => {
-            localStorage.removeItem('loggedIn');
-            window.location.href = '../LoginRegister/login.html';
-        });
         // ==========================================
         // LOADING SCREEN
         // ==========================================
@@ -166,73 +522,82 @@
         });
 
         // ==========================================
-        // USER DROPDOWN
+        // SCROLL ANIMATIONS
         // ==========================================
-        const userAvatar = document.getElementById('userAvatar');
-        const userDropdown = document.getElementById('userDropdown');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        userAvatar.addEventListener('click', (e) => {
-            e.stopPropagation();
-            userDropdown.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('open');
-            }
-        });
-
-        // ==========================================
-        // FEATURE CARDS SCROLL ANIMATION
-        // ==========================================
-        const featureCards = document.querySelectorAll('.feature-card');
-        const featureObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 150);
-                    featureObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        featureCards.forEach(card => featureObserver.observe(card));
-
-        // ==========================================
-        // KEYBOARD SHORTCUTS
-        // ==========================================
-        document.addEventListener('keydown', (e) => {
-            // Escape to close modals
-            if (e.key === 'Escape') {
-                closeMobileMenu();
-                userDropdown.classList.remove('open');
-            }
-        });
-
-        // ==========================================
-        // SMOOTH REVEAL FOR ALL SECTIONS
-        // ==========================================
-        const revealElements = document.querySelectorAll('.section-label, .section-title, .section-divider');
-        const revealObserver = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animations
+        document.querySelectorAll('.feature-card, .stat-item, .step, .testimonial-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==========================================
+        // SMOOTH SCROLLING
+        // ==========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ==========================================
+        // HERO STATS COUNTER ANIMATION
+        // ==========================================
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
 
-        revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            revealObserver.observe(el);
-        });
+        const heroStats = document.querySelector('.hero-stats');
+        if (heroStats) {
+            statsObserver.observe(heroStats);
+        }
+
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.hero-stats .stat-number');
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.textContent.replace('%', ''));
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = stat.textContent.includes('%') ? target + '%' : target;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = stat.textContent.includes('%') ?
+                            Math.floor(current) + '%' : Math.floor(current);
+                    }
+                }, 30);
+            });
+        }
 
         // ==========================================
         // FEATURE CARD INTERACTIONS
         // ==========================================
+        const featureCards = document.querySelectorAll('.feature-card');
         featureCards.forEach(card => {
             card.addEventListener('click', function(e) {
                 // Create ripple effect
@@ -254,7 +619,7 @@
 
                 // Navigate after animation
                 setTimeout(() => {
-                    const link = this.querySelector('a');
+                    const link = this.querySelector('.feature-link');
                     if (link) {
                         window.location.href = link.href;
                     }
@@ -266,6 +631,67 @@
                 }, 600);
             });
         });
+
+        // ==========================================
+        // TESTIMONIAL SLIDER (if needed for mobile)
+        // ==========================================
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        // Auto-rotate testimonials on mobile
+        if (window.innerWidth <= 768) {
+            setInterval(() => {
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(currentTestimonial);
+            }, 5000);
+        }
+
+        // ==========================================
+        // CTA BUTTON ANIMATIONS
+        // ==========================================
+        const ctaButtons = document.querySelectorAll('.cta-section .btn-primary, .cta-section .btn-secondary');
+        ctaButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // ==========================================
+        // KEYBOARD SHORTCUTS
+        // ==========================================
+        document.addEventListener('keydown', (e) => {
+            // Escape to close modals
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+
+        // ==========================================
+        // LAZY LOADING IMAGES
+        // ==========================================
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
     </script>
     <script src="../theme.js"></script>
 </body>
